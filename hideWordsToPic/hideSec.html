@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery.min.js"></script>
+</head>
+<body>
+<a href="imgAddress" id="ama" download="Secret.jpg">
+    <img id="output"/>
+</a>
+<canvas id='canvas' style="display:none;"></canvas>
+<script type="text/javascript" src="imagemask.js"></script>
+<script>
+    var mask = new ImageMask({debug: false});
+    // read the data into the canvas element
+    var img = new Image();
+    img.src = "azure.jpg";
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    img.onload = function () {
+        ctx.canvas.width = img.width;
+        ctx.canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        code();
+    };
+    //Hide the information on the picture which the canvas draw before(not the real picture,but the canvas picture!), and you can download it after click the picture.
+    //You need save the canvas picture and use another tool in the folder aleardyHideWords.
+    function code() {
+        var message = "alert(\"we hide this, and will alert after eval.\")";
+        mask.hideText(canvas, message);
+        $("#ama").attr("href", canvas.toDataURL());
+        $("#output").attr("src",canvas.toDataURL());
+    }
+</script>
+
+</body>
+</html>

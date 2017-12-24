@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id='canvas' style="display:none;"></canvas>
+<script type="text/javascript" src="imagemask.js"></script>
+<script>
+    var mask = new ImageMask({debug: false});
+    // read the data into the canvas element
+    var img = new Image();
+    img.src = "Secret.jpg";
+    var canvas = document.getElementById('canvas');
+    var ctx = canvas.getContext('2d');
+    img.onload = function () {
+        ctx.canvas.width = img.width;
+        ctx.canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+        decode();
+    };
+    // decode the image and display the contents if there is anything
+    function decode() {
+        // decode the message with the supplied password
+        var canvas = document.getElementById('canvas');
+        var message = mask.revealText(canvas);
+        //by eval() function, you can execute the js code in the message string.
+        //alert(message);
+        eval(message);
+    }
+</script>
+<script src="jquery.min.js"></script>
+
+</body>
+</html>
